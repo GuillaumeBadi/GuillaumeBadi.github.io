@@ -1,0 +1,365 @@
+
+.BoxShadowHelper(@level: 1){
+    & when (@level = 1) {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    }
+    & when (@level = 2) {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+    & when (@level = 3) {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+    & when (@level = 4) {
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    }
+    & when (@level = 5) {
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    }
+}
+
+*,
+*:before,
+*:after
+{
+	@value: border-box;
+	-moz-box-sizing: @value;
+	-webkit-box-sizing: @value;
+	box-sizing: @value;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body
+{
+	overflow-x: hidden;
+	background: #ecf0f1;
+	color: #444;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 1em;
+	padding: 0px;
+}
+
+.set-size {
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	font-size: 10em;
+	width: 80%;
+	height: 100%;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+
+	.skill {
+		margin: 20px;
+
+		.title {
+			font-size: 14px;
+			text-align: center;
+			margin: 20px;
+		}
+	}
+}
+
+.skills {
+	padding: 15px;
+}
+
+.view {
+	width: 100vw;
+}
+
+.pie-wrapper {
+	@size: 1em;
+
+	.size(@size, @size);
+	display: inline-block;
+	position: relative;
+
+	.pie {
+		.size(100%, 100%);
+		clip: rect(0, @size, @size, @size / 2);
+		left: 0;
+		position: absolute;
+		top: 0;
+
+		.half-circle {
+			  .size(100%, 100%);
+			  border: @size / 10 solid #3498db;
+			  border-radius: 50%;
+			  clip: rect(0, @size / 2, @size, 0);
+			  left: 0;
+			  position: absolute;
+			  top: 0;
+		}
+		transition: 1s all ease-in-out;
+	}
+
+	.label {
+		@font-size: @size / 4;
+		@font-size-redo: @size * 4;
+
+		background: #34495e;
+		border-radius: 50%;
+		bottom: @font-size-redo / 10;
+		color: #ecf0f1;
+		cursor: default;
+		display: block;
+		font-size: @font-size;
+		left: @font-size-redo / 10;
+		line-height: @font-size-redo * .72;
+		position: absolute;
+		right: @font-size-redo / 10;
+		text-align: center;
+		top: @font-size-redo / 10;
+
+		.smaller {
+		  color: #bdc3c7;
+		  font-size: .45em;
+		  padding-bottom: 20px;
+		  vertical-align: super;
+		}
+	}
+  
+	.shadow {
+		.size(100%, 100%);
+		border: @size / 10 solid #bdc3c7;
+		border-radius: 50%;
+	}
+  
+	&.style-2 {    
+		.label {
+			background: none;
+			color: #7f8c8d;
+
+			.smaller {
+				color: #bdc3c7;
+			}
+		}
+	}
+
+  &.progress-javascript {
+    .draw-progress(70, #f39c12);
+  }
+  
+  &.progress-node {
+    .draw-progress(60, #27ae60);
+  }
+  
+  &.progress-express {
+    .draw-progress(65, #2980b9);
+  }
+  
+  &.progress-cli {
+    .draw-progress(80, #8e44ad);
+  }
+  
+  &.progress-c {
+    .draw-progress(80, #e74c3c);
+  }
+  
+  &.progress-python {
+    .draw-progress(45, #2ecc71);
+  }
+
+  &.progress-coffee {
+    .draw-progress(64, #d35400);
+  }
+
+  &.progress-r {
+    .draw-progress(42, #2980b9);
+  }
+
+  &.progress-angular {
+    .draw-progress(53, #c0392b);
+  }
+
+  &.progress-html {
+    .draw-progress(87, #f39c12);
+  }
+
+  &.progress-php {
+    .draw-progress(25, #1abc9c);
+  }
+
+  &.progress-jq {
+    .draw-progress(83, #8e44ad);
+  }
+}
+
+.draw-progress(@progress, @color) when (@progress <= 50)
+{
+  .pie
+  {
+    .right-side
+    {
+      display: none;
+    }
+  }
+}
+
+.draw-progress(@progress, @color) when (@progress > 50)
+{
+  .pie
+  {
+    clip: rect(auto, auto, auto, auto);
+  
+    .right-side
+    {
+      .transform(rotate(180deg));
+    }
+  }
+}
+
+.draw-progress(@progress, @color)
+{
+  .pie
+  {
+    .half-circle
+    {
+      border-color: @color;
+    }
+    
+    .left-side
+    {
+      @rotate: @progress * 3.6;
+      .transform(rotate(~'@{rotate}deg'));
+    }
+  }
+}
+
+// --
+.size(@w, @h) {
+	height: @h;
+	width: @w;
+}
+
+.transform(@value) {
+	-webkit-transform: @value;
+	-moz-transform: @value;
+	-ms-transform: @value;
+	-o-transform: @value;
+	transform: @value;
+}
+
+header {
+	width: 100vw;
+	height: 350px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.bg {
+		background-image: url(http://wallpapersblog.org/wp-content/uploads/minimal-ocean-sea-full-hd-wallpaper-clouds-amazing-wallpaper.jpg);
+		background-size: cover;
+		background-attachment: fixed;
+		background-position: cover;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 350px;
+		position: absolute;
+		z-index: 1;
+	}
+
+	h1 {
+		padding: 15px;
+		font-family: Helvetica;
+		font-weight: lighter;
+		font-size: .95em;
+		display: inline;
+		display: inline;
+		z-index: 2;
+		color: #424242;
+	}
+}
+
+.content {
+	height: 200vh;
+	width: 100vw;
+}
+
+.projects {
+	.wrap {
+		background: #fff url(pattern.png) repeat 0 0;
+		background-size: 500px;
+		height: 100vh;
+		text-align: center;
+		width: 100vw;
+		padding: 50px;
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+
+		.project {
+			.BoxShadowHelper(3);
+			padding: 15px;
+			width: 250px;
+			height: 250px;
+			background-color: #f0f0f0;
+			transition: .2s all ease-in-out;
+			margin: 20px;
+			border-bottom: 7px solid silver;
+
+			&:hover {
+				.BoxShadowHelper(5);
+				background-color: #FFF;
+				transition: .2s all ease-in-out;
+			}
+
+			.img {
+				padding: 50px;
+				margin-bottom: 5px;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+
+			.ls {
+				background-image: url(http://i.stack.imgur.com/OtM9M.png);
+			}
+
+			.shell {
+				background-image: url(http://img.gawkerassets.com/img/17waftgjfrx4pjpg/ku-xlarge.jpg);
+				background-position: 0 0;
+			}
+
+			.fdf {
+				background-image: url(fdf.png);
+			}
+
+			.corewar {
+				background-image: url(http://www.infionline.net/~wtnewton/corewar/evol/redmixer1.gif);
+			}
+
+			.libc {
+				background-image: url(http://upload.wikimedia.org/wikipedia/en/d/db/Libc.png);
+			}
+
+			.game {
+				background-image: url(http://i-cms.journaldunet.com/image_cms/original/2117439-2048-la-solution-pour-gagner-presque-a-tous-les-coups.png);
+			}
+
+			h1 {
+				font-family: Helvetica;
+				font-size: .95em;
+				margin: 5px;
+				color: #e74c3c;
+			}
+		}
+	}
+}
